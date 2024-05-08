@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const SongListSchema = new Schema({
     listMusicId: {
         type: Schema.Types.ObjectId,
-        ref: "ListMusic"
+        ref: "MusicList"
     },
     songId: {
         type: String,

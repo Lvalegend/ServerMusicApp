@@ -2,7 +2,7 @@ const CategoryModel = require('../models/category');
 
 const infoCategory = async (req, res, next) => {
     try {
-        const categories = await CategoryModel.find();
+        const categories = await CategoryModel.find({});
 
         console.log(categories);
     

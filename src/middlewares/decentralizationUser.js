@@ -1,5 +1,4 @@
 // Phân quyền
-
 const checkUserNormal = (req, res, next) => {
     const role = req.user.role
     if( role === "normal" || role === "manager" ){

@@ -14,7 +14,7 @@ const SongSchema = new Schema({
         type: String
     },
     imageLink: {
-        type: Buffer
+        type: String
     },
     songLink: {
         type: String

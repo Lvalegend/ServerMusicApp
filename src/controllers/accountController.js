@@ -21,7 +21,6 @@ const register = async (req, res, next) => {
                 password: password
             });
 
-            // AccountModel.find().populate('song')
 
             // Tạo JWT cho người dùng mới
             const token = jwt.sign({ userId: newUser._id }, config.jwtSecret, { expiresIn: '1h' }); // Thời gian sống của token là 1 giờ
@@ -74,8 +73,6 @@ const getUserInfo = async (req, res, next) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
-
-
         res.status(200).send(user)
     } catch (error) {
         console.error('Error getting user info:', error);

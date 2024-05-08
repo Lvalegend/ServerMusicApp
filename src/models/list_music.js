@@ -8,12 +8,6 @@ const MusicListSchema = new Schema({
     nameMusicList: {
         type: String
     },
-    description: {
-        type: String
-    },
-    imageLink: {
-        type: String
-    },
     userAccountId: {
         type: Schema.Types.ObjectId,
         ref: 'Account'
@@ -21,7 +15,6 @@ const MusicListSchema = new Schema({
 }, {
     collection: 'MusicList',
 });
-
 
 const MusicListModel = mongoose.model('MusicList', MusicListSchema);
 module.exports = MusicListModel;

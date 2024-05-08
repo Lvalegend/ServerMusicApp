@@ -19,7 +19,7 @@ const AccountSchema = new Schema({
         required: true
     },
     avatar: {
-        type: Buffer
+        type: String
     },
     introduction:{
         type: String
