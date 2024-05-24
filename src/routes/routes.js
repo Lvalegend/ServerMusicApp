@@ -1,5 +1,3 @@
-// File: userRoutes.js
-// Import các module cần thiết
 const express = require('express');
 const { register, login, getUserInfo  } = require('../controllers/accountController');
 const { fileNameUpload, responeImageUpload, tranformImage } = require('../controllers/imageProcessingController');
@@ -7,6 +5,8 @@ const {infoSong,songImage} = require('../controllers/songController');
 const authenticateToken  = require('../middlewares/authenticateToken');
 const checkLogin = require('../middlewares/checkLogin');
 const infoCategory = require('../controllers/categoryController');
+const connectionChat = require('../controllers/chatController');
+const { CreateStudent, GetAllStudent, DeleteStudent } = require('../controllers/studentController');
 const router = express.Router();
 
 // Route đăng ký người dùng
@@ -33,6 +33,10 @@ router.get('/avatar', authenticateToken, tranformImage)
 
 // Route lấy thông tin người dùng
 router.get('/infoUser', authenticateToken, getUserInfo)
+
+
+
+
 
 
 module.exports = router;

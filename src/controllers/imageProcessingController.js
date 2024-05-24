@@ -112,7 +112,7 @@ const tranformImage = async (req, res, next) => {
         });
         imageStream.on('error', function(err) {
             console.error('Lỗi khi mở tệp:', err);
-            res.statusCode = 404; 
+            res.statusCode = 404;   
             res.end('Tệp không tồn tại hoặc không thể mở.'); 
         });
         

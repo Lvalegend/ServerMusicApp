@@ -4,6 +4,7 @@ module.exports = {
         host: 'localhost',
         port: 27017,
         dbName: 'DataAccount',
+        dbName2: 'Student',
         username: 'Lvalegend',
         password: 'Monstercity123@'
     },
