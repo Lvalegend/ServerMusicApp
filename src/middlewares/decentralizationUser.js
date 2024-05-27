@@ -1,21 +1,16 @@
 // Phân quyền
-const checkUserNormal = (req, res, next) => {
+const checkDecentralizationUser = (req, res, next) => {
     const role = req.user.role
-    if( role === "normal" || role === "manager" ){
-        next()
+    console.log('role:',role);
+    if( role === "normal" ){
+        return res.status(200).json({ redirect: '/UserAfterLoginOrRegister'});
     }
-    else{
-        res.json("Not Permission")
-    }
-}
-const checkUserManager = (req, res, next) => {
-    const role = req.user.role
     if( role === "manager" ){
-        next()
+        return res.status(200).json({ redirect: '/Manager'});
     }
     else{
-        res.json("Not Permission")
+        return res.json("Not Permission")
     }
 }
 
-module.exports = {checkUserNormal, checkUserManager}
+module.exports = checkDecentralizationUser

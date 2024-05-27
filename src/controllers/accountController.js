@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
         const token = jwt.sign({ userId: account._id }, config.jwtSecret, { expiresIn: '1h' }); // Thời gian sống của token là 1 giờ
 
         // Trả về kết quả thành công và JWT để tự đăng nhập
-        return res.status(200).json({ message: 'Login successful', token, redirect: '/UserAfterLoginOrRegister'});
+        return res.status(200).json({ message: 'Login successful', token, redirect: '/HomeScreen'});
 
     } catch (error) {
         // Xử lý lỗi nếu có
@@ -66,7 +66,7 @@ const getUserInfo = async (req, res, next) => {
         // Lấy thông tin người dùng từ cơ sở dữ liệu
         const userId = req.user.userId;
 
-        // Tìm người dùng theo ID và chọn trường avatar
+        // Tìm người dùng theo ID 
         const user = await AccountModel.findById(userId).select({}).exec();
 
         // Nếu không tìm thấy người dùng, trả về lỗi
