@@ -33,6 +33,25 @@ const songImage = async (req, res, next) => {
   }
 };
 
+const searchSongByName = async (req, res) => {
+  try {
+    const searchKeyword = req.body.searchKeyword;
+    
+    // Kiểm tra nếu searchKeyword bị bỏ trống
+    if (!searchKeyword || searchKeyword.trim() === "") {
+      return res.status(400).json({ message: 'Search keyword is required' });
+    }
+
+    const regex = new RegExp(searchKeyword, 'i');
+    const songs = await SongModel.find({ nameSong: regex });
+    const songIds = songs.map(song => song.nameSong);
+
+    return res.status(200).json({ songIds });
+  } catch (error) {
+    console.error('Error searching songs:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
 
 
-module.exports = { infoSong, songImage };
+module.exports = { infoSong, songImage, searchSongByName };
