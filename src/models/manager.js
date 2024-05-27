@@ -23,10 +23,6 @@ const ManagerSchema = new Schema({
     password:{
         type: String
     },
-    
-
-
-
 
 }, {
     collection: 'Manager',

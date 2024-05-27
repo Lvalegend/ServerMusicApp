@@ -4,8 +4,13 @@ const { fileNameUpload, responeImageUpload, tranformImage } = require('../contro
 const {infoSong,songImage, searchSongByName} = require('../controllers/songController');
 const authenticateToken  = require('../middlewares/authenticateToken');
 const checkLogin = require('../middlewares/checkLogin');
+
 const infoCategory = require('../controllers/categoryController');
 const {getAlbum, createAlbum, addSongToAlbum, removeSongFromAlbum} = require('../controllers/albumController')
+const checkDecentralizationUser = require('../middlewares/decentralizationUser');
+const audioStream = require('../controllers/audioStream');
+
+
 const router = express.Router();
 
 // Route đăng ký người dùng
@@ -32,6 +37,9 @@ router.post('/upload', fileNameUpload, authenticateToken, responeImageUpload);
 // Route để chuyển ảnh về Image và lấy về client
 router.get('/avatar', authenticateToken, tranformImage)
 
+// phân quyền người dùng
+router.get('/decentralization', checkLogin, checkDecentralizationUser )
+
 // Route lấy thông tin người dùng
 router.get('/infoUser', authenticateToken, getUserInfo)
 
@@ -46,4 +54,7 @@ router.put('/album/:albumId/songs/:songId', addSongToAlbum);
 
 //Route xóa 1 bài hát từ 1 album
 router.delete('/album/:albumId/songs/:songId', removeSongFromAlbum)
+router.get('/video', audioStream)
+
+
 module.exports = router;
