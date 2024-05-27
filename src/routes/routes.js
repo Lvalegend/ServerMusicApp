@@ -39,7 +39,7 @@ router.get('/decentralization', checkLogin, checkDecentralizationUser )
 // Route lấy thông tin người dùng
 router.get('/infoUser', authenticateToken, getUserInfo)
 
-router.get('/video', audioStream)
+router.get('/audio', audioStream)
 
 
 module.exports = router;

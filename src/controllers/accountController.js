@@ -23,10 +23,10 @@ const register = async (req, res, next) => {
 
 
             // Tạo JWT cho người dùng mới
-            const token = jwt.sign({ userId: newUser._id }, config.jwtSecret, { expiresIn: '1h' }); // Thời gian sống của token là 1 giờ
+            const token = jwt.sign({ userId: newUser._id }, config.jwtSecret, { expiresIn: '2h' }); // Thời gian sống của token là 1 giờ
             
             // Trả về thông báo đăng ký thành công và JWT để tự đăng nhập
-            return res.status(200).json({ message: ' Register Successful', token, redirect: '/UserAfterLoginOrRegister' });
+            return res.status(200).json({ message: ' Register Successful', token, redirect: '/HomeScreen' });
         }
 
     } catch (error) {
@@ -49,7 +49,7 @@ const login = async (req, res, next) => {
         }
 
         // Tạo JWT cho người dùng đã đăng nhập
-        const token = jwt.sign({ userId: account._id }, config.jwtSecret, { expiresIn: '1h' }); // Thời gian sống của token là 1 giờ
+        const token = jwt.sign({ userId: account._id }, config.jwtSecret, { expiresIn: '2h' }); // Thời gian sống của token là 1 giờ
 
         // Trả về kết quả thành công và JWT để tự đăng nhập
         return res.status(200).json({ message: 'Login successful', token, redirect: '/HomeScreen'});
