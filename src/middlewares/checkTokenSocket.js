@@ -1,19 +1,41 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
-const checkTokenSocket = (socket, next) => {
-    if (socket.handshake.auth.token == null) {
-        socket.emit('unauthorized', { message: 'You are not login or register' });
+const CommentModel = require('../models/comment');
+const AccountModel = require('../models/account');
+
+const checkTokenSocket = async (socket, next) => {
+    const token = socket.handshake.auth.token;
+    if (!token) {
+        socket.emit('unauthorized', { message: 'You are not logged in or registered' });
         return socket.disconnect();
     }
-    console.log(socket.handshake.auth.token);
-    const receiver_token = socket.handshake.auth.token
-    jwt.verify(receiver_token, config.jwtSecret, (err, user) => {
-        if (err) {
-            console.log("Error: " + err)
-            return socket.disconnect()
+    console.log('token', token);
+
+    try {
+        const decoded = jwt.verify(token, config.jwtSecret);
+        const comments = await CommentModel.find({ userId: decoded.userId }).populate('userId', 'name avatar');
+        
+        if (comments.length > 0) {
+            const comment = comments[0];
+            socket.data.user = {
+                _id: comment.userId._id,
+                name: comment.userId.name,
+                date: comment.date 
+            };
+        } else {
+            socket.data.user = { 
+                _id: decoded.userId, 
+                name: 'Unknown User', 
+                avatar: '', 
+                date: new Date().toLocaleString()
+            };
         }
-        socket.userId = user.userId;
         next();
-    });
+    } catch (err) {
+        console.log("Error: " + err);
+        socket.emit('unauthorized', { message: 'Token verification failed' });
+        return socket.disconnect();
+    }
 }
-module.exports = checkTokenSocket
+
+module.exports = checkTokenSocket;

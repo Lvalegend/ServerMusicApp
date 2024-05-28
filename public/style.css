@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.inbox {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+.inbox__people {
+    background-color: #f2f2f2;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+}
+
+.inbox__people h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.inbox__messages {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.messages__history {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.message__author {
+    font-weight: bold;
+}
+
+.message__content {
+    background-color: #e0f7fa;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.message_form {
+    margin-top: 20px;
+    display: flex;
+}
+
+.message_form__input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    font-size: 16px;
+}
+
+.message_form__button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.message_form__button:hover {
+    background-color: #0056b3;
+}
+p {
+    color:'red';
+}

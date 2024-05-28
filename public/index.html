@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.io simple chat</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="inbox">
+            <div class="inbox__people">
+                <h4>Active users</h4>
+            </div>
+            <div class="inbox__messages">
+                <div class="messages__history"></div>
+                <div class="fallback"></div>
+            </div>
+        </div>
+
+        <form class="message_form">
+            <input type="text" class="message_form__input" placeholder="Type a message" />
+            <button class="message_form__button" type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjE2YjliZDA2MmQ5Yjk2YmFhMWU1MTYiLCJpYXQiOjE3MTY5MDQ5MTQsImV4cCI6MTcxNzA4NDkxNH0.2lzBwqICKRirQflX9_1LfCQz4U6K4NUzGSwBN7cXLtQ';
+        const socket = io({
+            path: '/socket-io',
+            auth: { token }
+        });
+        
+        const messageForm = document.querySelector('.message_form');
+        const messageInput = document.querySelector('.message_form__input');
+        const messageContainer = document.querySelector('.messages__history');
+
+        // Thay đổi sự kiện 'click' thành 'submit'
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = messageInput.value;
+            socket.emit('send-message', { message });
+            messageInput.value = '';
+        });
+
+        // Đảm bảo log sự kiện nhận tin nhắn
+        socket.on('received-message', (message) => {
+            console.log('Received message:', message);
+            const messageElement = document.createElement('p');
+            messageElement.textContent = `${message.name}: ${message.message}`;
+            messageContainer.append(messageElement);
+        });
+
+        // Log các sự kiện kết nối và lỗi để kiểm tra
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('connect_error', (err) => {
+            console.log('Connection failed:', err);
+        });
+    </script>
+</body>
+
+</html>

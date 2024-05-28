@@ -27,11 +27,13 @@ app.use(cors({
 const io = require('socket.io')(server, {
   path: '/socket-io',
   cors: {
-      origin: `http://localhost:${config.server.port}`,
-      methods: ['GET', 'POST'],
-      allowedHeaders: ['Content-Type']
+    origin: `http://localhost:${config.server.port}`,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
   }
 });
+
+app.use(express.static("public"));
 app.use('/', router)
 
 
@@ -42,17 +44,29 @@ server.listen(config.server.port, () => {
 io.use(checkTokenSocket)
 
 io.on("connection", function (socket) {
-  const userId = socket.userId
+  if (!socket.data.user) {
+    // Ensure socket.data.user is set by middleware
+    console.log("Socket data is missing user information");
+    return socket.disconnect();
+  }
+
+  const userId = socket.data.user._id;
+  const name = socket.data.user.name;
+
+
+
   console.log("user connected:", socket.id);
 
   socket.emit('user-connected', socket.id);
+  console.log('Success');
 
   socket.on('send-message', async (data) => {
     const info = {
       userId: userId,
       socketId: socket.id,
-      message: data.message
-    }
+      message: data.message,
+      name: name
+    };
     console.log("received message", info);
     io.emit('received-message', info);
   });
@@ -60,7 +74,6 @@ io.on("connection", function (socket) {
   socket.on('disconnect', () => {
     console.log('user: ', socket.id, ' disconnected');
   });
-
 });
 
 

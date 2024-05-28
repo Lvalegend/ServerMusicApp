@@ -2,9 +2,10 @@ const CommentModel = require("../models/comment");
 const AccountModel = require("../models/account");
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
+
 const addInfoComment = async (req, res, next) => {
   const { token, songId, socketChat, message, originMessageId } = req.body.data
-  const id = null
+  let id = null
   jwt.verify(token, config.jwtSecret, async (err, user) => {
     if (err) {
       return res.sendStatus(403);
