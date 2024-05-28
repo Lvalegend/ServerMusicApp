@@ -9,6 +9,7 @@ const infoCategory = require('../controllers/categoryController');
 const {getAlbum, createAlbum, addSongToAlbum, removeSongFromAlbum} = require('../controllers/albumController')
 const checkDecentralizationUser = require('../middlewares/decentralizationUser');
 const audioStream = require('../controllers/audioStream');
+const { addInfoComment, getInfoComment } = require('../controllers/commentController');
 
 
 const router = express.Router();
@@ -55,6 +56,12 @@ router.put('/album/:albumId/songs/:songId', addSongToAlbum);
 
 //Route xóa 1 bài hát từ 1 album
 router.delete('/album/:albumId/songs/:songId', removeSongFromAlbum)
+
+// Route để thêm comment
+router.post('/addComment', addInfoComment)
+
+// Route để lấy comment
+router.get('/getComment', getInfoComment)
 
 
 
