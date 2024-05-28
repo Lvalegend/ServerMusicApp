@@ -18,6 +18,9 @@ const SongSchema = new Schema({
     songLink: {
         type: String
     },
+    song:{
+        type: String
+    },
     diration: {
         type: String
     },

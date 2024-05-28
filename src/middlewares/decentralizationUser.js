@@ -6,7 +6,7 @@ const checkDecentralizationUser = (req, res, next) => {
         return res.status(200).json({ redirect: '/UserAfterLoginOrRegister'});
     }
     if( role === "manager" ){
-        return res.status(200).json({ redirect: '/Manager'});
+        return res.status(200).json({ redirect: '/ManageScreen'});
     }
     else{
         return res.json("Not Permission")

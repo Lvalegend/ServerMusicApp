@@ -6,10 +6,11 @@ const authenticateToken  = require('../middlewares/authenticateToken');
 const checkLogin = require('../middlewares/checkLogin');
 
 const infoCategory = require('../controllers/categoryController');
-const {getAlbum, createAlbum, addSongToAlbum, removeSongFromAlbum, albumImage} = require('../controllers/albumController')
+const {getAlbum, createAlbum, addSongToAlbum, removeSongFromAlbum, albumImage, getAlbumById} = require('../controllers/albumController')
 const checkDecentralizationUser = require('../middlewares/decentralizationUser');
 const audioStream = require('../controllers/audioStream');
 const {getPlaylist, createPlaylist, addSongToPlaylist, removeSongFromPlaylist, playlistImage, getPlaylistById} = require('../controllers/playlistController')
+const { addInfoComment, getInfoComment } = require('../controllers/commentController');
 
 
 const router = express.Router();
@@ -31,7 +32,7 @@ router.get('/songImages', songImage)
 // Route tìm kiếm bài hát
 router.post('/search', searchSongByName)
 
-// Route tìm kiếm bài hát
+// Route lấy bài hát theo id
 router.get('/song/:id', getSongById)
 
 // Route để lấy dữ liệu về thể loại
@@ -64,6 +65,16 @@ router.delete('/album/:albumId/songs/:songId', removeSongFromAlbum)
 
 // Route để lấy ảnh album 
 router.get('/albumImages', albumImage)
+
+// Route để lấy album theo id
+router.get('/album/:id', getAlbumById)
+
+// Route để thêm comment
+router.post('/addComment', addInfoComment)
+
+// Route để lấy comment
+router.get('/getComment', getInfoComment)
+
 
 // Route lấy thông tin playlist
 router.get('/inforPlaylist', getPlaylist)
