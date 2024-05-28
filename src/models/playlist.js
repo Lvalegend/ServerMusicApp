@@ -11,10 +11,10 @@ const PlaylistSchema = new Schema({
         type: String,
         required: true
     },
-    color: {
+    color: [{
         type: String,
 
-    },
+    }],
     image: {
         type: String,
     },

@@ -8,7 +8,6 @@ const SongSchema = new Schema({
     _id: {
         type: String,
         required: true,
-        auto: false  
     },
     nameSong: {
         type: String
@@ -17,6 +16,9 @@ const SongSchema = new Schema({
         type: String
     },
     songLink: {
+        type: String
+    },
+    diration: {
         type: String
     },
     singerId: {

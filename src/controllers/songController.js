@@ -36,17 +36,16 @@ const songImage = async (req, res, next) => {
 const searchSongByName = async (req, res) => {
   try {
     const searchKeyword = req.body.searchKeyword;
-    
-    // Kiểm tra nếu searchKeyword bị bỏ trống
+
+    // Nếu searchKeyword không tồn tại hoặc bị bỏ trống, truy vấn tất cả bài hát
     if (!searchKeyword || searchKeyword.trim() === "") {
-      return res.status(400).json({ message: 'Search keyword is required' });
+      const songs = await SongModel.find();
+      return res.status(200).json(songs);
     }
 
     const regex = new RegExp(searchKeyword, 'i');
     const songs = await SongModel.find({ nameSong: regex });
-    const songIds = songs.map(song => song.nameSong);
-
-    return res.status(200).json({ songIds });
+    return res.status(200).json(songs);
   } catch (error) {
     console.error('Error searching songs:', error);
     return res.status(500).json({ message: 'Server error' });
@@ -54,4 +53,43 @@ const searchSongByName = async (req, res) => {
 };
 
 
-module.exports = { infoSong, songImage, searchSongByName };
+
+
+const createSong = async (req, res) => {
+  try {
+      const { nameSong, imageLink, songLink, diration, singerId, managerId } = req.body;
+      const newSong = new SongModel({
+        nameSong,
+        imageLink,
+        songLink,
+        diration,
+        singerId,
+        managerId
+      });
+
+      await newSong.save();
+      return res.status(201).json(newSong);
+  } catch (error) {
+      console.error('Error creating album:', error);
+      return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getSongById = async (req, res) => {
+  try {
+      const songId = req.params.id;
+      const song = await SongModel.findById(songId);
+
+      if (!song) {
+          return res.status(404).json({ message: 'Song not found' });
+      }
+
+      return res.status(200).json(song);
+  } catch (error) {
+      console.error('Error getting song by ID:', error);
+      return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+module.exports = { infoSong, songImage, searchSongByName, createSong, getSongById };
